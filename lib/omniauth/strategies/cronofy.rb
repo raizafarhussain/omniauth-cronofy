@@ -29,8 +29,9 @@ module OmniAuth
 
       def request_phase
         link_token = session['omniauth.params']['link_token']
+        options[:authorize_params] ||= {}
+        options[:authorize_params].merge!(:avoid_linking => true)
         if link_token && !link_token.empty?
-          options[:authorize_params] ||= {}
           options[:authorize_params].merge!(:link_token => link_token)
         end
         super
